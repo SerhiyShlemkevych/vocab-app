@@ -14,47 +14,17 @@ let getMetadata = require('musicmetadata');
 getMetadata = promisify(getMetadata);
 
 
-const scan = async () => {
-  const pattern = path.join(config.libraryPath, '/**/*.*');
-  const paths = (await globby.sync(pattern)).slice(0, 100);
-
-  const library = await promiseMap(paths, async (filePath) => {
-    let stream;
-    const id = uuid();
-    try {
-      stream = fs.createReadStream(filePath);
-
-      stream.on('error', () => {})
-      const {
-        picture,
-        ...metadata
-      } = await getMetadata(stream);
-
-      if (picture[0]) {
-        const imagePath = path.join(
-          config.imagesPath,
-          `${id}.jpg`
-        );
-
-        await fs.writeFileAsync(imagePath, picture[0].data);
-      }
-
-      return {
-        ...metadata,
-        filePath,
-        id
-      }
-    } catch (err) {
-      return {
-        filePath,
-        id
-      };
-    } finally {
-      stream && stream.close();
-    }
-  });
-
-  await db.put('library', library);
+const patch = async (items) => {
+  const patchedItems = db.get('library')
+    .map(target => {
+      const patchData = items.find(i => i.id === target.id);
+      return patchData
+        ? {
+          ...target,
+          ...patchData
+        }
+        : target
+    });
 };
 
 const get = async () => {
@@ -62,6 +32,5 @@ const get = async () => {
 };
 
 module.exports = {
-  scan,
   get
 };

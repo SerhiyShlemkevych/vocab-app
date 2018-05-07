@@ -1,34 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
-import List from 'material-ui/List';
-import styled from 'styled';
+import {
+  List,
+  Drawer,
+  Divider,
+  ListItem,
+  ListItemText
+} from 'material-ui';
+import { withStyles } from 'material-ui/styles';
+import width from '../main-menu/width';
 
-const StyledDrawer = styled(Drawer)({
-    width: '10rem',
-    height: '10rem',
-    //display: 'none'
+const styles = theme => ({
+  drawerPaper: {
+    width: width,
+  },
+  toolbar: theme.mixins.toolbar
 });
 
 export class MainMenu extends React.Component {
 
-    render() {
+  render() {
+    const { classes } = this.props;
 
-        return (
-            <StyledDrawer
-                variant="permanent"
-
-            >
-                <Divider />
-                <List>{"cdcd"}</List>
-                <Divider />
-                <List>{"cdcsdcvcccccccccccccc"}</List>
-            </StyledDrawer>
-        );
-    }
+    return (
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.toolbar} />
+        <Divider />
+        <List>
+          <ListItem button>
+            <ListItemText primary="Browse" />
+          </ListItem>
+        </List>
+        <Divider />
+      </Drawer>
+    );
+  }
 }
 
 export default compose(
+  withStyles(styles)
 )(MainMenu);

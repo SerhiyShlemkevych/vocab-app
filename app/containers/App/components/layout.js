@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import menuWidth from '../../main-menu/width'
 
 const ContantContainer = styled.div`
-    margin-right: ${menuWidth};
+    margin-left: ${menuWidth};
+    width: calc(100% - ${menuWidth});
 `;
 
 export default ({ children }) => (

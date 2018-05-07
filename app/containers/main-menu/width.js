@@ -1,1 +1,1 @@
-export default '10rem';
+export default '20rem';

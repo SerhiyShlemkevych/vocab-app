@@ -28,10 +28,12 @@ export default function App() {
       </Helmet>
       <CssBaseline />
       <Theme>
-        <Layout>
+        <div>
           <MainMenu />
-          <BrowsePage />
-        </Layout>
+          <Layout>
+            <BrowsePage />
+          </Layout>
+        </div>
       </Theme>
     </div>
   );
