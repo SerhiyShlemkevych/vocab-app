@@ -5,7 +5,7 @@ import {
     SET_PAGE,
     CHANGE_CRITERION,
     CHANGE_DIRECTION,
-    LIBRARY_UPDATED
+    MARK_WORDS_REVISED
 } from './constants';
 
 export const fetchLibrary = () => ({
@@ -26,17 +26,17 @@ export const setPage = (page) => ({
     page
 });
 
-export const changeCriterion  = (event) => ({
+export const changeCriterion = (event) => ({
     type: CHANGE_CRITERION,
     criterion: event.target.value
 });
 
-export const changeDirection  = (event) => ({
+export const changeDirection = (event) => ({
     type: CHANGE_DIRECTION,
     direction: event.target.value
 });
 
-export const libraryUpdated = (payload) => ({
-    type: LIBRARY_UPDATED,
-    payload
+export const markWordsRevised = (words) => ({
+    type: MARK_WORDS_REVISED,
+    ids: words.map(w => w.id)
 });

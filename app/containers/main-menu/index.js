@@ -10,6 +10,7 @@ import {
 } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import width from '../main-menu/width';
+import BrowseItem from '../browse-page/components/MenuItem/index';
 
 const styles = theme => ({
   drawerPaper: {
@@ -33,9 +34,7 @@ export class MainMenu extends React.Component {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemText primary="Browse" />
-          </ListItem>
+          <BrowseItem />
         </List>
         <Divider />
       </Drawer>

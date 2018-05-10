@@ -51,8 +51,8 @@ const Bar = ({
                     onChange={changeDirection}
                     className={classes.select}
                 >
-                    <MenuItem value={'ASC'}>{'Ascending'}</MenuItem>
-                    <MenuItem value={'DESC'}>{'Descending'}</MenuItem>
+                    <MenuItem value={'asc'}>{'Ascending'}</MenuItem>
+                    <MenuItem value={'desc'}>{'Descending'}</MenuItem>
                 </Select>
             </Toolbar>
         </AppBar>

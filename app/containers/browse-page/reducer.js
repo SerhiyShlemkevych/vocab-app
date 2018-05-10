@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
-import { orderBy } from 'lodash'
+import { orderBy, zipObject } from 'lodash';
 import {
     FETCH_LIBRARY_SUCCESS,
     SET_PAGE,
     CHANGE_CRITERION,
     CHANGE_DIRECTION,
-    LIBRARY_UPDATED
+    MARK_WORDS_REVISED
 } from './constants';
-
-const pageSize = 16;
 
 const sortMap = {
     ADD_DATE: 'id',
@@ -17,76 +15,79 @@ const sortMap = {
     RANDOM: 'randomPosition'
 };
 
-const library = (state = [], action) => {
+const updateLibrary = (raw) => {
+    const res = {
+        byId: zipObject(raw.map(i => i.id), raw),
+        sorted: {
+            ADD_DATE: {
+                asc: orderBy(raw, [sortMap.ADD_DATE], ['asc']).map(i => i.id)
+            },
+            REV_DATE: {
+                asc: orderBy(raw, [sortMap.REV_DATE], ['asc']).map(i => i.id)
+            },
+            PRIORITY: {
+                asc: orderBy(raw, [sortMap.PRIORITY], ['asc']).map(i => i.id)
+            },
+            RANDOM: {
+                asc: orderBy(raw, [sortMap.RANDOM], ['asc']).map(i => i.id)
+            },
+        }
+    };
+    res.sorted.ADD_DATE.desc = res.sorted.ADD_DATE.asc.slice(0).reverse();
+    res.sorted.REV_DATE.desc = res.sorted.REV_DATE.asc.slice(0).reverse();
+    res.sorted.PRIORITY.desc = res.sorted.PRIORITY.asc.slice(0).reverse();
+    res.sorted.RANDOM.desc = res.sorted.RANDOM.asc.slice(0).reverse();
+    return res;
+};
+
+const library = (state = updateLibrary([]), action) => {
     switch (action.type) {
         case FETCH_LIBRARY_SUCCESS:
-            return action.library;
+            return updateLibrary(action.library);
+        case MARK_WORDS_REVISED: {
+            const now = new Date();
+            const updated = {};
+            action.ids.forEach(id => {
+                updated[id] = {
+                    ...state.byId[id],
+                    revisedDate: now
+                };
+            });
+
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    ...updated
+                }
+            };
+        }
         default:
             return state;
     }
 };
 
-const paginate = (allItems, page, pageSize) =>
-    allItems.slice(page * pageSize - pageSize,
-        page * pageSize);
-
 const pagination = (state = {
     currentPage: 1,
-    items: [],
     maxPage: 1,
     sortCriterion: 'ADD_DATE',
-    sortDirection: 'DESC',
+    sortDirection: 'desc',
 }, action) => {
     switch (action.type) {
-        case CHANGE_DIRECTION: {
-            if (!state.sorted) return state;
-
+        case CHANGE_DIRECTION:
             return {
                 ...state,
-                sortDirection: action.direction,
-                items: paginate(
-                    state.sorted[action.direction][state.sortCriterion],
-                    1,
-                    pageSize)
+                sortDirection: action.direction
             };
-        };
-        case CHANGE_CRITERION: {
-            if (!state.sorted) return state;
-
+        case CHANGE_CRITERION:
             return {
                 ...state,
-                sortCriterion: action.criterion,
-                items: paginate(
-                    state.sorted[state.sortDirection][action.criterion],
-                    1,
-                    pageSize)
+                sortCriterion: action.criterion
             };
-        };
-        case LIBRARY_UPDATED: {
-            const { library, sorted } = action.payload;
-            return {
-                ...state,
-                currentPage: 1,
-                items: paginate(
-                    sorted[state.sortDirection][state.sortCriterion],
-                    state.currentPage,
-                    pageSize
-                ),
-                maxPage: (library.length % pageSize === 0
-                    ? library.length / pageSize
-                    : Math.floor(library.length / pageSize) + 1),
-                sorted
-            };
-        }
         case SET_PAGE:
             return {
                 ...state,
-                currentPage: action.page,
-                items: paginate(
-                    state.sorted[state.sortDirection][state.sortCriterion],
-                    action.page,
-                    pageSize
-                )
+                currentPage: action.page
             };
         default: return state;
     }

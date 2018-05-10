@@ -18,7 +18,8 @@ import {
   fetchLibrary,
   setPage,
   changeCriterion,
-  changeDirection
+  changeDirection,
+  markWordsRevised
 } from './actions';
 
 export class BrowsePage extends React.Component {
@@ -28,6 +29,8 @@ export class BrowsePage extends React.Component {
 
   render() {
     const {
+      reviseModeEnabled,
+      markWordsRevised,
       page,
       setPage,
       changeCriterion,
@@ -48,7 +51,17 @@ export class BrowsePage extends React.Component {
           currentPage={page.currentPage}
           setPage={setPage}
         />
-        <MainButton />
+        <MainButton
+          icon={
+            reviseModeEnabled
+              ? 'done'
+              : 'add'
+          }
+          onClick={
+            reviseModeEnabled
+              ? () => markWordsRevised(page.items)
+              : () => console.log(212)
+          } />
       </Layout>
     );
   }
@@ -56,10 +69,12 @@ export class BrowsePage extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  page: selectors.getPage(state)
+  page: selectors.getPage(state),
+  reviseModeEnabled: selectors.getReviseModeEnabled(state)
 });
 
 const mapDispatchToProps = {
+  markWordsRevised,
   changeDirection,
   changeCriterion,
   fetchLibrary,

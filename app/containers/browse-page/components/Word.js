@@ -25,14 +25,24 @@ const styles = {
         width: '10%',
         textAlign: 'center'
     },
+    revised: {
+        background: 'linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 63%,rgba(255,255,255,1) 84%,rgba(255,255,255,1) 91%,rgba(255,255,255,1) 91%,rgba(121,196,124,1) 100%);'
+    }
 };
+
+const now = new Date();
+const _30days = 2629746000;
 
 const Word = ({ classes, data }) => (
     <div className={classes.container}>
         <Paper className={
             classNames(
                 classes.foreign,
-                classes.wordPart
+                classes.wordPart,
+                (now - data.revisedDate < _30days)
+                    ? classes.revised
+                    : ''
+
             )
         }>
             <Typography variant="title">
@@ -43,7 +53,10 @@ const Word = ({ classes, data }) => (
             classNames(
                 classes.mid,
                 classes.native,
-                classes.wordPart
+                classes.wordPart,
+                (now - data.revisedDate < _30days)
+                    ? classes.revised
+                    : ''
             )
         }>
             <Typography variant="title">

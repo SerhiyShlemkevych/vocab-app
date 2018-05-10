@@ -13,9 +13,9 @@ const styles = {
     }
 };
 
-export const MainButton = ({ classes, onClick }) => (
-    <Button className={classes.button} variant="fab" color="secondary">
-        <Icon>add</Icon>
+export const MainButton = ({ classes, onClick, icon }) => (
+    <Button className={classes.button} onClick={onClick} variant="fab" color="secondary">
+        <Icon>{icon}</Icon>
     </Button>
 );
 

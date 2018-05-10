@@ -1,0 +1,1 @@
+export const TOGGLE_REVISE_MODE = 'TOGGLE_REVISE_MODE';
