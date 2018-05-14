@@ -11,6 +11,7 @@ const styles = theme => ({
         marginRight: '0.5rem',
     },
     container: {
+        paddingBottom: '2rem',
         width: '100%',
         display: 'flex',
         justifyContent: 'center'

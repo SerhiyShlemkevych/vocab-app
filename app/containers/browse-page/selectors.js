@@ -1,4 +1,4 @@
-const pageSize = 16;
+const pageSize = 15;
 const paginate = (allItems, page, pageSize) =>
     allItems.slice(page * pageSize - pageSize,
         page * pageSize);

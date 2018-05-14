@@ -10,13 +10,23 @@ const styles = theme => ({
     }
 })
 
-const List = ({ items, classes }) => (
-    <div className={classes.container}>
-        <div className={classes.toolbar} />
-        {items.map(item => (
-            <Word key={item.id} data={item} />
-        ))}
-    </div>
-);
+const List = ({
+    items,
+    classes,
+    onPlusClick,
+    onMinusClick
+}) => (
+        <div className={classes.container}>
+            <div className={classes.toolbar} />
+            {items.map(item => (
+                <Word
+                    onMinusClick={() => onMinusClick(item)}
+                    onPlusClick={() => onPlusClick(item)}
+                    key={item.id}
+                    data={item}
+                />
+            ))}
+        </div>
+    );
 
 export default withStyles(styles)(List);

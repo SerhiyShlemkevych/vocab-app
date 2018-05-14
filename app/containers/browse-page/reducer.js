@@ -5,7 +5,9 @@ import {
     SET_PAGE,
     CHANGE_CRITERION,
     CHANGE_DIRECTION,
-    MARK_WORDS_REVISED
+    MARK_WORDS_REVISED,
+    INC_WORD_PRIORITY,
+    DEC_WORD_PRIORITY
 } from './constants';
 
 const sortMap = {
@@ -42,6 +44,28 @@ const updateLibrary = (raw) => {
 
 const library = (state = updateLibrary([]), action) => {
     switch (action.type) {
+        case INC_WORD_PRIORITY:
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.id]: {
+                        ...state.byId[action.id],
+                        priority: state.byId[action.id].priority + 1
+                    }
+                }
+            };
+        case DEC_WORD_PRIORITY:
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.id]: {
+                        ...state.byId[action.id],
+                        priority: state.byId[action.id].priority - 1
+                    }
+                }
+            };
         case FETCH_LIBRARY_SUCCESS:
             return updateLibrary(action.library);
         case MARK_WORDS_REVISED: {

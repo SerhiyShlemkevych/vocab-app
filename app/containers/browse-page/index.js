@@ -19,7 +19,9 @@ import {
   setPage,
   changeCriterion,
   changeDirection,
-  markWordsRevised
+  markWordsRevised,
+  incrementWordPriority,
+  decrementWordPriority
 } from './actions';
 
 export class BrowsePage extends React.Component {
@@ -34,7 +36,9 @@ export class BrowsePage extends React.Component {
       page,
       setPage,
       changeCriterion,
-      changeDirection
+      changeDirection,
+      incrementWordPriority,
+      decrementWordPriority,
     } = this.props;
     return (
       <Layout>
@@ -45,7 +49,9 @@ export class BrowsePage extends React.Component {
           sortCriterion={page.sortCriterion}
           sortDirection={page.sortDirection}
         />
-        <WordList items={page.items} />
+        <WordList items={page.items} 
+        onPlusClick={incrementWordPriority} 
+        onMinusClick={decrementWordPriority} />
         <Pagination
           maxPage={page.maxPage}
           currentPage={page.currentPage}
@@ -74,6 +80,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  incrementWordPriority,
+  decrementWordPriority,
   markWordsRevised,
   changeDirection,
   changeCriterion,
