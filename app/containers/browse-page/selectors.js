@@ -10,7 +10,7 @@ export const getPage = ({browsePage: state}) => {
         items: paginate(
             all,
             state.pagination.currentPage,
-            pageSize).map(id => state.library.byId[id]),
+            pageSize),
             maxPage: (all.length % pageSize === 0
                 ? all.length / pageSize
                 : Math.floor(all.length / pageSize) + 1),

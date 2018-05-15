@@ -11,6 +11,7 @@ import {
 import { withStyles } from 'material-ui/styles';
 import width from '../main-menu/width';
 import BrowseItem from '../browse-page/components/MenuItem/index';
+import ImportItem from '../import-page/components/MenuItem';
 
 const styles = theme => ({
   drawerPaper: {
@@ -35,6 +36,8 @@ export class MainMenu extends React.Component {
         <Divider />
         <List>
           <BrowseItem />
+          <Divider />
+          <ImportItem />
         </List>
         <Divider />
       </Drawer>

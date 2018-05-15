@@ -5,9 +5,7 @@ import {
     SET_PAGE,
     CHANGE_CRITERION,
     CHANGE_DIRECTION,
-    MARK_WORDS_REVISED,
-    INC_WORD_PRIORITY,
-    DEC_WORD_PRIORITY
+    MARK_WORDS_REVISED
 } from './constants';
 
 export const fetchLibrary = () => ({
@@ -41,14 +39,4 @@ export const changeDirection = (event) => ({
 export const markWordsRevised = (words) => ({
     type: MARK_WORDS_REVISED,
     ids: words.map(w => w.id)
-});
-
-export const incrementWordPriority = (word) => ({
-    type: INC_WORD_PRIORITY,
-    id: word.id
-});
-
-export const decrementWordPriority = (word) => ({
-    type: DEC_WORD_PRIORITY,
-    id: word.id
 });

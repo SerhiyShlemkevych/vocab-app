@@ -42,11 +42,11 @@ const styles = {
     }
 };
 
-const now = new Date();
-const _30days = 2629746000;
-
 const Word = ({
     classes,
+    isNativeVisible,
+    isForeignVisible,
+    isRevised,
     data,
     onPlusClick,
     onMinusClick
@@ -56,7 +56,7 @@ const Word = ({
                 classNames(
                     classes.foreign,
                     classes.wordPart,
-                    (now - data.revisedDate < _30days)
+                    (isRevised)
                         ? classes.revised
                         : ''
 
@@ -71,7 +71,7 @@ const Word = ({
                     classes.mid,
                     classes.native,
                     classes.wordPart,
-                    (now - data.revisedDate < _30days)
+                    (isRevised)
                         ? classes.revised
                         : ''
                 )

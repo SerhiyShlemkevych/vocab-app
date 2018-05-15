@@ -6,10 +6,12 @@ import {
 } from './actions';
 import {
     FETCH_LIBRARY,
-    MARK_WORDS_REVISED,
+    MARK_WORDS_REVISED
+} from './constants';
+import {
     INC_WORD_PRIORITY,
     DEC_WORD_PRIORITY
-} from './constants';
+} from './components/WordData/constants';
 
 function* fetchLibrary() {
     yield put(fetchLibraryStart());

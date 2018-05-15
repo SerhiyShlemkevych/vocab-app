@@ -1,6 +1,6 @@
 import { withStyles } from 'material-ui';
 import React from 'react';
-import Word from './Word';
+import WordData from './WordData';
 
 const styles = theme => ({
     toolbar: theme.mixins.toolbar,
@@ -12,18 +12,14 @@ const styles = theme => ({
 
 const List = ({
     items,
-    classes,
-    onPlusClick,
-    onMinusClick
+    classes
 }) => (
         <div className={classes.container}>
             <div className={classes.toolbar} />
             {items.map(item => (
-                <Word
-                    onMinusClick={() => onMinusClick(item)}
-                    onPlusClick={() => onPlusClick(item)}
-                    key={item.id}
-                    data={item}
+                <WordData
+                    key={item}
+                    id={item}
                 />
             ))}
         </div>

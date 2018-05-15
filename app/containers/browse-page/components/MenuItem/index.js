@@ -13,11 +13,22 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
-import { toggleReviseMode } from './actions';
+import {
+    toggleReviseMode,
+    toggleForeignVisibility,
+    toggleNativeVisibility
+} from './actions';
 import * as selectors from './selectors';
 
 const MenuItem = (props) => {
-    const { toggleReviseMode, reviseModeEnabled } = props;
+    const {
+        toggleReviseMode,
+        toggleForeignVisibility,
+        toggleNativeVisibility,
+        reviseModeEnabled,
+        nativeVisible,
+        foreignVisible
+    } = props;
 
     return (
         <NestedListItem isOpen={true} title="Browse" items={[
@@ -30,10 +41,30 @@ const MenuItem = (props) => {
                                 <Switch
                                     onChange={toggleReviseMode}
                                     checked={reviseModeEnabled}
-                                    value="checkedF"
+                                    value="checkedA"
                                 />
                             }
                             label="Revise mode"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    onChange={toggleForeignVisibility}
+                                    checked={foreignVisible}
+                                    value="checkedB"
+                                />
+                            }
+                            label="Foreign visible"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    onChange={toggleNativeVisibility}
+                                    checked={nativeVisible}
+                                    value="checkedC"
+                                />
+                            }
+                            label="Native visible"
                         />
                     </span>
                 )
@@ -43,11 +74,15 @@ const MenuItem = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    reviseModeEnabled: selectors.getReviseModeEnabled(state)
+    reviseModeEnabled: selectors.getReviseModeEnabled(state),
+    foreignVisible: selectors.getForeignVisible(state),
+    nativeVisible: selectors.getNativeVisible(state)
 });
 
 const mapdDispatchToProps = {
-    toggleReviseMode
+    toggleReviseMode,
+    toggleForeignVisibility,
+    toggleNativeVisibility
 };
 
 const withConnect = connect(mapStateToProps, mapdDispatchToProps);
