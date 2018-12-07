@@ -39,8 +39,17 @@ const styles = {
     },
     inline: {
         alignSelf: 'center'
+    },
+    text: {
+        '&:hover': {
+            opacity: '1 !important'
+        }
     }
 };
+
+const getVisibilityStyle = (visible) => ({
+    opacity: (visible ? 1 : 0)
+});
 
 const Word = ({
     classes,
@@ -62,7 +71,7 @@ const Word = ({
 
                 )
             }>
-                <Typography variant="title">
+                <Typography className={classes.text} style={getVisibilityStyle(isForeignVisible)} variant="title">
                     {data.foreign}
                 </Typography>
             </Paper>
@@ -76,7 +85,7 @@ const Word = ({
                         : ''
                 )
             }>
-                <Typography variant="title">
+                <Typography className={classes.text} style={getVisibilityStyle(isNativeVisible)} variant="title">
                     {data.native}
                 </Typography>
             </Paper>
@@ -106,7 +115,7 @@ const Word = ({
                     {"-"}
                 </Button>
             </Paper>
-        </div>
+        </div >
     );
 
 export default withStyles(styles)(Word);

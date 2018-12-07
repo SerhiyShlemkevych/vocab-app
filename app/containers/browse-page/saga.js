@@ -19,6 +19,7 @@ function* fetchLibrary() {
     library.forEach(item => {
         item.revisedDate = new Date(item.revisedDate);
         item.date = new Date(item.date);
+        item.randomPosition = Math.random();
     });
     yield put(fetchLibrarySuccess(library));
 }
